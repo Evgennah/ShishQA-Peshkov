@@ -1,0 +1,5 @@
+http://89.223.126.182/testrail/index.php?/plans/view/15
+
+http://89.223.126.182:8080/secure/RapidBoard.jspa?rapidView=4&projectKey=AVT&quickFilter=7
+
+https://evgennah.github.io/ShishQA-Peshkov/index.html
