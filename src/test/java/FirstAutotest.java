@@ -46,7 +46,7 @@ public class FirstAutotest {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement successButton = driver.findElement(By.id("success"));
         successButton.submit();
-        /* что сличаем на финальной странице [@id="payment-status-title"]/span 1.success
+        /* что сличаем на финальной странице c забранными с первой [@id="payment-status-title"]/span 1.success
         [@id="payment-item-status"]/div[2] 2.confirmed - payment status
         3.order number
         4.currency + amount */
