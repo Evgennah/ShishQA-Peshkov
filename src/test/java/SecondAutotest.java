@@ -1,19 +1,15 @@
-import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertTrue;
-
-public class FirstAutotest {
+public class SecondAutotest {
     public static WebDriver driver;
 
     @BeforeClass
@@ -26,33 +22,12 @@ public class FirstAutotest {
     }
 
     @Test
-    public void openPage() throws IOException, InterruptedException {
-        String titleActual = driver.getTitle();
-        String titleExpected = "Unlimint Payment Page";
-        Assert.assertEquals("Title not matching", titleExpected, titleActual);
-
-             WebElement Question = driver.findElement(By.id("cvc-hint-toggle"));
-        Actions builder = new Actions(driver);
-        Action act = builder.moveToElement(Question).build();
-        act.perform();
-        try {
-            File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File("C://Users//Admin//Desktop//Тестирование ПО (Сухоруков)//Git//ShishQA-Peshkov//google-logo.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        act = builder.release(Question).build();
-        act.perform();
-        assertTrue(new File("C://Users/Admin//Desktop//Тестирование ПО (Сухоруков)//Git//ShishQA-Peshkov//google-logo.png").exists());
-    }
-
-    @Test
     public void firstPayment() throws IOException {
         String currency = driver.findElement(By.id("currency")).getText();
         String totalAmount = driver.findElement(By.id("total-amount")).getText();
         String orderNumber = driver.findElement(By.id("order-number")).getText();
         WebElement cardNumber = driver.findElement(By.id("input-card-number"));
-        cardNumber.sendKeys("4000000000000002");
+        cardNumber.sendKeys("4000000000000051");
         WebElement cardHolder = driver.findElement(By.id("input-card-holder"));
         cardHolder.sendKeys("CI VON");
         WebElement expiresMonth = driver.findElement(By.id("card-expires-month"));
@@ -65,27 +40,20 @@ public class FirstAutotest {
         WebElement payButton = driver.findElement(By.id("action-submit"));
         payButton.click();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        WebElement successButton = driver.findElement(By.id("success"));
-        successButton.submit();
-        String paymentStatusTitleActual = driver.findElement(By.id("payment-status-title")).getText();
-        String paymentStatusTitleExpected = "Success";
-        Assert.assertEquals("Statuses do not match", paymentStatusTitleExpected,paymentStatusTitleActual);
         String paymentStatusActual = driver.findElement(By.id("payment-item-status")).getText();
-        String paymentStatusExpected = "Payment status Confirmed";
-        Assert.assertEquals("Statuses do not match", paymentStatusExpected,paymentStatusActual);
+        String paymentStatusExpected = "Payment status CONFIRMED";
+        Assert.assertEquals("Statuses do not match", paymentStatusExpected, paymentStatusActual);
         String orderNumberActual = driver.findElement(By.id("payment-item-ordernumber")).getText();
-        String orderNumberExpected = "Order number "+orderNumber;
-        Assert.assertEquals("Statuses do not match", orderNumberExpected,orderNumberActual);
+        String orderNumberExpected = "Order number " + orderNumber;
+        Assert.assertEquals("Statuses do not match", orderNumberExpected, orderNumberActual);
         String CurrencyActual = driver.findElement(By.xpath("//div[@id='payment-item-total']")).getText();
-        String CurrencyExpected = "Total amount "+currency+"   "+totalAmount;
-        Assert.assertEquals("Statuses do not match", CurrencyExpected,CurrencyActual);
+        String CurrencyExpected = "Total amount " + currency + "   " + totalAmount;
+        Assert.assertEquals("Statuses do not match", CurrencyExpected, CurrencyActual);
         String totalAmountActual = driver.findElement(By.id("payment-item-total-amount")).getText();
-        Assert.assertEquals("Statuses do not match", totalAmount,totalAmountActual);
+        Assert.assertEquals("Statuses do not match", totalAmount, totalAmountActual);
 
 
-
-       driver.quit();
+        driver.quit();
     }
 
 }
-

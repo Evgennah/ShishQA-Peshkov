@@ -1,19 +1,15 @@
-import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertTrue;
-
-public class FirstAutotest {
+public class ThirdAutotest {
     public static WebDriver driver;
 
     @BeforeClass
@@ -24,35 +20,13 @@ public class FirstAutotest {
         driver.get("https://sandbox.cardpay.com/MI/cardpayment2.html?orderXml=PE9SREVSIFdBTExFVF9JRD0nODI5OScgT1JERVJfTlVNQkVSPSc0NTgyMTEnIEFNT1VOVD0nMjkxLjg2JyBDVVJSRU5DWT0nRVVSJyAgRU1BSUw9J2N1c3RvbWVyQGV4YW1wbGUuY29tJz4KPEFERFJFU1MgQ09VTlRSWT0nVVNBJyBTVEFURT0nTlknIFpJUD0nMTAwMDEnIENJVFk9J05ZJyBTVFJFRVQ9JzY3NyBTVFJFRVQnIFBIT05FPSc4NzY5OTA5MCcgVFlQRT0nQklMTElORycvPgo8L09SREVSPg==&sha512=998150a2b27484b776a1628bfe7505a9cb430f276dfa35b14315c1c8f03381a90490f6608f0dcff789273e05926cd782e1bb941418a9673f43c47595aa7b8b0d");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
-
-    @Test
-    public void openPage() throws IOException, InterruptedException {
-        String titleActual = driver.getTitle();
-        String titleExpected = "Unlimint Payment Page";
-        Assert.assertEquals("Title not matching", titleExpected, titleActual);
-
-             WebElement Question = driver.findElement(By.id("cvc-hint-toggle"));
-        Actions builder = new Actions(driver);
-        Action act = builder.moveToElement(Question).build();
-        act.perform();
-        try {
-            File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File("C://Users//Admin//Desktop//Тестирование ПО (Сухоруков)//Git//ShishQA-Peshkov//google-logo.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        act = builder.release(Question).build();
-        act.perform();
-        assertTrue(new File("C://Users/Admin//Desktop//Тестирование ПО (Сухоруков)//Git//ShishQA-Peshkov//google-logo.png").exists());
-    }
-
     @Test
     public void firstPayment() throws IOException {
         String currency = driver.findElement(By.id("currency")).getText();
         String totalAmount = driver.findElement(By.id("total-amount")).getText();
         String orderNumber = driver.findElement(By.id("order-number")).getText();
         WebElement cardNumber = driver.findElement(By.id("input-card-number"));
-        cardNumber.sendKeys("4000000000000002");
+        cardNumber.sendKeys("5555555555554444");
         WebElement cardHolder = driver.findElement(By.id("input-card-holder"));
         cardHolder.sendKeys("CI VON");
         WebElement expiresMonth = driver.findElement(By.id("card-expires-month"));
@@ -68,10 +42,10 @@ public class FirstAutotest {
         WebElement successButton = driver.findElement(By.id("success"));
         successButton.submit();
         String paymentStatusTitleActual = driver.findElement(By.id("payment-status-title")).getText();
-        String paymentStatusTitleExpected = "Success";
+        String paymentStatusTitleExpected = "Decline";
         Assert.assertEquals("Statuses do not match", paymentStatusTitleExpected,paymentStatusTitleActual);
         String paymentStatusActual = driver.findElement(By.id("payment-item-status")).getText();
-        String paymentStatusExpected = "Payment status Confirmed";
+        String paymentStatusExpected = "Payment status Declined by issuing bank";
         Assert.assertEquals("Statuses do not match", paymentStatusExpected,paymentStatusActual);
         String orderNumberActual = driver.findElement(By.id("payment-item-ordernumber")).getText();
         String orderNumberExpected = "Order number "+orderNumber;
@@ -84,8 +58,7 @@ public class FirstAutotest {
 
 
 
-       driver.quit();
+        driver.quit();
     }
 
 }
-
