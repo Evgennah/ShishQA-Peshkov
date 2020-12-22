@@ -1,0 +1,17 @@
+1. SELECT COUNT(CustomerID) FROM Customers WHERE Country="Germany" 
+
+2. SELECT * FROM Customers WHERE ContactName LIKE "%e %%"
+
+3. INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ("Evgennah", "Evgenij Peshkov", "Koshurnikov st 37- 128", "Novosibirsk", "630089", "Russia")
+
+4. UPDATE Customers 
+SET CustomerName = "EVGENNAH THE TESTER", ContactName = "Evgenij Michailovich Peshkov"
+WHERE CustomerName="Evgennah"
+
+5. DELETE FROM Customers WHERE City = "Nantes"
+
+6. SELECT Orders.OrderID, Employees.FirstName FROM Orders 
+INNER JOIN Employees 
+ON Orders.EmployeeID = Employees.EmployeeID
+WHERE FirstName = "Steven"
